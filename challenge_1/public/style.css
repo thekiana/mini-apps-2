@@ -1,0 +1,26 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: black;
+  font-family: 'Baskerville', sans-serif;
+}
+
+.search {
+  margin: auto;
+  text-align: center;
+}
+
+.list {
+  margin: auto;
+  padding: 50px;
+  width: 60%;
+  color: white;
+  text-align: left;
+}
+
+.list-header {
+  margin: auto;
+  padding: 50px;
+  text-align: center;
+  color: white;
+}
