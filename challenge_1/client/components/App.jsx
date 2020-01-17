@@ -26,7 +26,6 @@ class App extends React.Component {
       url: `/events?_limit=10`,
     })
     .then((events) => {
-      console.log('list in Mount ', events);
       this.setState({
         list: events.data
       })
@@ -36,7 +35,6 @@ class App extends React.Component {
   handleChange(e) {
     e.preventDefault();
     const query = e.target.value;
-    console.log('query ', query);
     this.setState({ query });
   }
 
@@ -49,7 +47,6 @@ class App extends React.Component {
       url: `/events?_limit=10&q=${query}`,
     })
     .then((events) => {
-      console.log('list in finder ', events);
       const queryResults = events.data;
       this.setState({
         list: queryResults.filter(event => event.description.toLowerCase().includes(query.toLowerCase())),
@@ -57,7 +54,7 @@ class App extends React.Component {
       })
     });
   }
-  
+
   render() {
     return (
       <div>
@@ -79,5 +76,3 @@ class App extends React.Component {
 }
 
 export default App;
-
-// GET /events?q=word
