@@ -4,7 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "react-dev": "webpack -d --watch"
   },
   "keywords": [],
   "author": "",
