@@ -5,7 +5,7 @@ const port = 3000;
 // const bodyParser = require('body-parser');
 
 app.get('/', (req, res) => {
-  console.log('hi bitch');
+  console.log('hi world');
 });
 
 app.listen(port, () => console.log(`We be listening on port ${port}`));
