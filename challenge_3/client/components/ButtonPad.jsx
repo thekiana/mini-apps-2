@@ -6,7 +6,6 @@ const ButtonPad = ({ handleClick }) => {
 
   return (
   <div className="button-pad">
-     <h1>Play!</h1>
 
     <div className="buttons">
       {buttons.map(numPin => (
