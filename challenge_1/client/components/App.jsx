@@ -2,7 +2,6 @@ import React from 'react';
 import ReactPaginate from 'react-paginate';
 import axios from 'axios';
 import { FaSearch } from 'react-icons/fa';
-import { FaEgg } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 
 import List from './List.jsx';
@@ -13,21 +12,24 @@ class App extends React.Component {
     this.state = {
       query: '',
       keyword: '',
-      list: []
+      list: [],
+      pageCount: 0
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.finder = this.finder.bind(this);
+    this.handlePageClick = this.handlePageClick.bind(this);
   }
 
   componentDidMount() {
     axios({
       method: 'get',
-      url: `/events?_limit=10`,
+      url: `/events?_limit=10`
     })
     .then((events) => {
       this.setState({
-        list: events.data
+        list: events.data,
+        pageCount: [events['headers']['x-total-count']]
       })
     });
   }
@@ -55,11 +57,30 @@ class App extends React.Component {
     });
   }
 
+  handlePageClick(e) {
+    const query = this.state.query;
+
+    axios({
+      method: 'get',
+      url: `/events?_page=${e.selected + 1}&_limit=10&q=${query}`
+    })
+    .then((events) => {
+      this.setState({
+        list: events.data,
+        pageCount: [events['headers']['x-total-count']]
+      })
+    })
+    .catch((err) => {
+        console.log(err)
+    });
+  }
+
   render() {
     return (
       <div>
+
         <div className="search">
-          <IconContext.Provider value={{ color: "white", className: "fa-search" }}>
+          <IconContext.Provider value={{ color: "black", className: "fa-search" }}>
             <h1><FaSearch /></h1>
           </IconContext.Provider>
           <form onSubmit={(e) => this.finder(e)}>
@@ -68,7 +89,23 @@ class App extends React.Component {
           </form>
         </div>
 
-        <List list={this.state.list} query={this.state.query} />
+        <div className="list-container">
+          <List list={this.state.list} query={this.state.query} />
+          <ReactPaginate
+            previousLabel={'previous'}
+            nextLabel={'next'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={this.state.pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+          />
+        </div>
+
       </div>
     );
   }
